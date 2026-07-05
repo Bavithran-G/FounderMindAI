@@ -67,11 +67,17 @@ function App() {
     setView('pipeline');
 
     try {
-      const response = await fetch('/api/analyze', {
+      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+      if (!apiBaseUrl) {
+        throw new Error('VITE_API_BASE_URL is not set');
+      }
+
+      const response = await fetch(`${apiBaseUrl}/api/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ idea })
       });
+
 
       if (!response.ok) {
         throw new Error(`Server error: ${response.status}`);

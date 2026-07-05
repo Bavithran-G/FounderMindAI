@@ -6,14 +6,15 @@ from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
-import uuid
+import uuid 
 
-from server.agents.market_research import run_market_research_agent
-from server.agents.business_strategy import run_business_strategy_agent
-from server.agents.product_architect import run_product_architect_agent
-from server.agents.investor_agent import run_investor_agent
-from server.agents.pitch_deck import run_pitch_deck_agent
-from server.agents.execution_agent import run_execution_agent
+from agents.market_research import run_market_research_agent
+from agents.business_strategy import run_business_strategy_agent
+from agents.product_architect import run_product_architect_agent
+from agents.investor_agent import run_investor_agent
+from agents.pitch_deck import run_pitch_deck_agent
+from agents.execution_agent import run_execution_agent
+
 
 load_dotenv()
 

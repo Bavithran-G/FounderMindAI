@@ -1,5 +1,6 @@
 from typing import Any, Dict
-from server.utils.ai import call_ai, extract_json
+from utils.ai import call_ai, extract_json
+
 
 SYSTEM_PROMPT = """You are a world-class market research analyst at a top-tier consulting firm (McKinsey / BCG level).
 You have deep expertise in startup ecosystems, competitive intelligence, and market opportunity assessment.

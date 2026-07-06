@@ -1,5 +1,6 @@
 from typing import Any, Dict
-from server.utils.ai import call_ai, extract_json
+from utils.ai import call_ai, extract_json
+
 
 SYSTEM_PROMPT = """You are a seasoned startup COO who has taken 5 companies from zero to Series A.
 You create ruthlessly practical execution plans — specific, measurable, and achievable.

@@ -1,5 +1,6 @@
 from typing import Any, Dict
-from server.utils.ai import call_ai, extract_json
+from utils.ai import call_ai, extract_json
+
 
 SYSTEM_PROMPT = """You are a McKinsey Senior Partner and former Y Combinator partner with 20+ years of experience
 building and advising billion-dollar startups. You craft bulletproof business strategies with clear, monetizable

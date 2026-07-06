@@ -1,5 +1,6 @@
 from typing import Any, Dict
-from server.utils.ai import call_ai, extract_json
+from utils.ai import call_ai, extract_json
+
 
 SYSTEM_PROMPT = """You are a world-renowned startup pitch consultant who has helped companies raise over $2 billion.
 You've crafted pitch decks for unicorns. You know exactly what investors want to see, how to frame a narrative,

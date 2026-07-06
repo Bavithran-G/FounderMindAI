@@ -1,5 +1,6 @@
 from typing import Any, Dict
-from server.utils.ai import call_ai, extract_json
+from utils.ai import call_ai, extract_json
+
 
 SYSTEM_PROMPT = """You are the CTO of a successful YC-backed startup (Series B, $50M raised).
 You've shipped products used by millions. You design elegant, scalable MVPs with laser focus on user value.

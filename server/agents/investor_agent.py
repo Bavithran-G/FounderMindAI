@@ -1,5 +1,6 @@
 from typing import Any, Dict
-from server.utils.ai import call_ai, extract_json
+from utils.ai import call_ai, extract_json
+
 
 SYSTEM_PROMPT = """You are a General Partner at a Tier-1 venture capital firm (Sequoia / a16z / Benchmark level).
 You've evaluated 10,000+ pitches. You are known for rigorous, unbiased due diligence.

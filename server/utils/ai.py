@@ -11,8 +11,9 @@ MAX_RETRIES = 2
 RATE_LIMIT_WAIT_S = 20
 
 def get_api_key() -> str:
-    # Reads VITE_GROQ_API_KEY from the .env file
+    # Reads VITE_GROQ_API_KEY from environment variables (Render/hosting env)
     return os.environ.get('VITE_GROQ_API_KEY', '')
+
 
 def create_client(api_key: str) -> OpenAI:
     # Groq is OpenAI-compatible, just different base_url

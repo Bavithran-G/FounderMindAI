@@ -1,5 +1,5 @@
 from typing import Any, Dict
-from utils.ai import call_ai, extract_json
+from server.utils.ai import call_ai, extract_json
 
 
 SYSTEM_PROMPT = """You are a world-class market research analyst at a top-tier consulting firm (McKinsey / BCG level).

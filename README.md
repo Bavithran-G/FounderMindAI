@@ -1,330 +1,230 @@
-# 🧠 FounderMindAI
+# 🧠 FounderMindAI — Startup Intelligence Platform
 
-> **Your Autonomous AI Co-Founder — From Idea to Investor-Ready Startup**
-
-FounderMindAI is an advanced AI-powered startup intelligence platform that transforms startup ideas into investor-ready business ventures through an autonomous multi-agent system. Simply describe your startup idea, and six specialized AI agents collaborate to perform market research, business planning, product design, investor evaluation, pitch deck creation, and execution planning.
-
-Instead of switching between ChatGPT, Google Search, Excel, Notion, Canva, and PowerPoint, FounderMindAI delivers everything in one intelligent workflow—turning raw ideas into structured, validated, and actionable startup plans within minutes.
+An advanced AI-powered platform that transforms raw startup ideas into comprehensive, actionable business intelligence. Submit any idea and watch **6 specialized AI agents** work in parallel to deliver a full-spectrum analysis — from market research and VC scoring to a branded pitch deck and 90-day execution plan — all streamed live to your screen.
 
 ---
 
-# ✨ Features
+## 🌐 Live Demo
+
+Try the app here: **[FounderMindAI](https://founder-mind-ai.vercel.app)**
+
+> ⚡ Backend hosted on Render (free tier — may take ~30s to cold start on first request)
+
+---
+
+## ✨ Features
 
 | Feature | Description |
-|----------|-------------|
-| 🤖 Multi-Agent AI | Six specialized AI agents collaborate autonomously |
-| 📊 Market Research | Competitor analysis, market trends, gap identification, opportunity scoring |
-| 💼 Business Strategy | Revenue model, pricing strategy, customer segmentation, value proposition |
-| 🏗 Product Architecture | MVP planning, user journey, development roadmap, tech stack |
-| 💰 Investor Analysis | VC-style evaluation with funding score and risk assessment |
-| 🎯 Pitch Deck Generator | Automatically creates investor-ready presentations |
-| 📅 Execution Planner | Generates structured 30/60/90-day execution roadmap |
-| 📄 PDF Export | Comprehensive startup analysis report |
-| 📊 PPTX Export | Professionally designed investor pitch deck |
-| ⚡ Live Streaming | Real-time AI response generation using Server-Sent Events |
+|---------|-------------|
+| 🔍 Market Research Agent | Opportunity score, competitor analysis, market trends & gaps |
+| 💼 Business Strategy Agent | Value proposition, revenue model, pricing tiers, customer segments |
+| 🏗️ Product Architecture Agent | MVP features, tech stack, phase-wise roadmap |
+| 💰 VC Investor Agent | Funding score, verdict, risk analysis, due-diligence Q&A |
+| 🎯 Pitch Deck Agent | Auto-generated branded slide deck with icons, content & key points |
+| 🚀 Execution Plan Agent | 30 / 60 / 90-day action plans, milestones & KPIs |
+| 📡 Live Streaming | Real-time SSE streaming — results appear as each agent completes |
+| 📄 PDF Export | Download the full report (all sections except pitch deck) as a styled PDF |
+| 🎯 PPTX Export | Download the pitch deck as a presentation-ready PowerPoint file |
+| 🌑 Dark Theme | Premium dark UI with light-blue FounderMindAI branding |
 
 ---
 
-# 🚀 Workflow
+## 🤖 Agent Pipeline
 
 ```
-Startup Idea
-      │
-      ▼
-Market Research Agent
-      │
-      ▼
-Business Strategy Agent
-      │
-      ▼
-Product Architect Agent
-      │
-      ▼
-Investor Agent
-      │
-      ▼
-Pitch Deck Agent
-      │
-      ▼
-Execution Agent
-      │
-      ▼
-Investor-Ready Startup Report
+User Idea
+    │
+    ├── 🔍 Market Research Agent    → opportunityScore, competitors, trends, gaps
+    ├── 💼 Business Strategy Agent  → valueProposition, moat, pricingTiers, segments
+    ├── 🏗️ Product Architect Agent  → mvpFeatures, techStack, roadmap
+    ├── 💰 VC Investor Agent        → fundingScore, verdict, risks, vcQuestions
+    ├── 🎯 Pitch Deck Agent         → startupName, tagline, slides[]
+    └── 🚀 Execution Agent          → milestones, kpis, day30/60/90 tasks
 ```
 
----
-
-# 🤖 Multi-Agent Architecture
-
-## 📊 Agent 1 — Market Research Agent
-
-- Competitor Analysis
-- Market Size
-- Industry Trends
-- SWOT Analysis
-- Opportunity Score
+All 6 agents run concurrently via **Server-Sent Events (SSE)** — the UI updates in real time as each one finishes.
 
 ---
 
-## 💼 Agent 2 — Business Strategist
+## 🚀 Setup (Local)
 
-Generates
-
-- Revenue Model
-- Pricing Strategy
-- Customer Segments
-- Value Proposition
-- Business Model
-
----
-
-## 🏗 Agent 3 — Product Architect
-
-Designs
-
-- MVP Features
-- User Journey
-- Technical Architecture
-- Recommended Tech Stack
-- Product Roadmap
-
----
-
-## 💰 Agent 4 — Investor Agent
-
-Acts like a Venture Capitalist
-
-Evaluates
-
-- Market Potential
-- Scalability
-- Competitive Advantage
-- Risks
-- Funding Score
-
----
-
-## 🎯 Agent 5 — Pitch Deck Agent
-
-Automatically creates
-
-- Problem
-- Solution
-- Market Opportunity
-- Business Model
-- Competition
-- Go-to-Market Strategy
-- Financial Highlights
-
----
-
-## 📅 Agent 6 — Execution Agent
-
-Builds
-
-- 30-Day Plan
-- 60-Day Plan
-- 90-Day Roadmap
-- Key Milestones
-- Success Metrics
-
----
-
-# 🌐 Live Demo
-
-Coming Soon...
-
----
-
-# 🚀 Setup
-
-## 1. Clone Repository
+### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
-
+git clone https://github.com/Bavithran-G/FounderMindAI.git
 cd FounderMindAI
 ```
 
----
+### 2. Get a Groq API Key
 
-## 2. Install Frontend
+1. Go to [https://console.groq.com](https://console.groq.com)
+2. Sign up for a free account
+3. Create an API key
+
+### 3. Configure environment variables
+
+Create a `.env` file in the project root:
+
+```env
+VITE_GROQ_API_KEY=gsk_your_groq_api_key_here
+```
+
+### 4. Install frontend dependencies
 
 ```bash
 npm install
 ```
 
----
-
-## 3. Install Backend
+### 5. Install Python backend dependencies
 
 ```bash
+# Create a virtual environment
 python -m venv venv
 
-# Windows
-venv\Scripts\activate
+# Activate it
+# Windows:
+.\venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
 
+# Install packages
 pip install -r server/requirements.txt
 ```
 
----
+### 6. Run the app
 
-## 4. Configure Environment Variables
+Open **two terminals**:
 
-Create a `.env` file in the project root.
-
-```env
-VITE_GROQ_API_KEY=your_groq_api_key
-```
-
-Get your API key from
-
-https://console.groq.com
-
----
-
-# ▶ Running the Application
-
-## Backend
-
+**Terminal 1 — Python Backend (FastAPI + Uvicorn)**
 ```bash
-venv\Scripts\activate
-
-uvicorn server.main:app --reload
+.\venv\Scripts\activate
+uvicorn server.main:app --reload --host 0.0.0.0 --port 8000
+# → http://localhost:8000
 ```
 
-Runs at
-
-```
-http://localhost:8000
-```
-
----
-
-## Frontend
-
+**Terminal 2 — React Frontend (Vite)**
 ```bash
 npm run dev
+# → http://localhost:5173
 ```
 
-Runs at
-
-```
-http://localhost:5173
-```
+Open **[http://localhost:5173](http://localhost:5173)** in your browser.
 
 ---
 
-# ⚙ How FounderMindAI Works
+## ☁️ Deployment
 
-```
-User submits startup idea
-            │
-            ▼
-FastAPI Backend receives request
-            │
-            ▼
-6 AI Agents execute sequentially
-            │
-            ▼
-Results streamed via SSE
-            │
-            ▼
-React UI updates in real time
-            │
-            ▼
-PDF & PPT reports generated
-```
+### Frontend → Vercel
+
+1. Push the repository to GitHub
+2. Go to [vercel.com](https://vercel.com) and import the repo
+3. Add environment variable:
+   ```
+   VITE_GROQ_API_KEY = gsk_your_key_here
+   ```
+4. Deploy — Vite builds automatically
+
+### Backend → Render
+
+1. Go to [render.com](https://render.com) → **New Web Service**
+2. Connect your GitHub repo
+3. Set the following:
+   - **Root Directory**: `server`
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port 8000`
+4. Add environment variable:
+   ```
+   VITE_GROQ_API_KEY = gsk_your_key_here
+   ```
+5. Update `vite.config.js` proxy target to your Render URL:
+   ```js
+   target: 'https://foundermindai.onrender.com'
+   ```
 
 ---
 
-# 🏗 Project Structure
+## 🏗️ Architecture
 
 ```
 FounderMindAI/
-
-├── server/
+├── server/                          # Python FastAPI backend
+│   ├── main.py                      # API server + SSE streaming endpoint
+│   ├── requirements.txt             # Python dependencies (pinned)
 │   ├── agents/
-│   │   ├── market_research.py
-│   │   ├── business_strategy.py
-│   │   ├── product_architect.py
-│   │   ├── investor_agent.py
-│   │   ├── pitch_deck.py
-│   │   └── execution_agent.py
-│   │
-│   ├── utils/
-│   │   └── ai.py
-│   │
-│   ├── main.py
-│   └── requirements.txt
+│   │   ├── market_research.py       # Market Research Agent
+│   │   ├── business_strategy.py     # Business Strategy Agent
+│   │   ├── product_architect.py     # Product Architect Agent
+│   │   ├── investor_agent.py        # VC Investor Agent
+│   │   ├── pitch_deck.py            # Pitch Deck Agent
+│   │   └── execution_agent.py       # Execution Plan Agent
+│   └── utils/
+│       └── ai.py                    # Groq API client (OpenAI-compatible)
 │
-├── src/
+├── src/                             # React + JavaScript frontend
+│   ├── App.jsx                      # Root app + SSE consumer
+│   ├── index.css                    # Global styles + design system
 │   ├── components/
-│   ├── App.jsx
-│   ├── utils/
-│   │   ├── downloadPDF.js
-│   │   └── downloadPPT.js
-│   │
-│   └── styles/
+│   │   ├── AgentPipeline.jsx        # Main orchestrator + progress tracker
+│   │   ├── AgentCard.jsx            # Individual agent status card
+│   │   ├── MarketReport.jsx         # Market Research results view
+│   │   ├── BusinessReport.jsx       # Business Strategy results view
+│   │   ├── ProductReport.jsx        # Product Architecture results view
+│   │   ├── InvestorReport.jsx       # VC Investor results view
+│   │   ├── PitchDeckView.jsx        # Slide-by-slide pitch deck viewer
+│   │   └── ExecutionReport.jsx      # 90-Day execution plan view
+│   └── utils/
+│       ├── downloadPDF.js           # Branded multi-page PDF export (jsPDF)
+│       └── downloadPPT.js           # Branded PPTX pitch deck export (PptxGenJS)
 │
-├── public/
-│
-├── .env
-├── package.json
-└── vite.config.js
+├── .env                             # API key (not committed to git)
+├── vite.config.js                   # Vite config (proxies /api → backend)
+├── package.json                     # Node.js dependencies
+└── README.md
 ```
 
 ---
 
-# 📄 Generated Outputs
+## 🛠️ Tech Stack
 
-FounderMindAI automatically generates
-
-- ✅ Market Research Report
-- ✅ Business Strategy
-- ✅ Product Roadmap
-- ✅ Investor Evaluation
-- ✅ Pitch Deck
-- ✅ 30/60/90 Day Execution Plan
-- ✅ Comprehensive PDF Report
-- ✅ Investor Presentation (PPTX)
-
----
-
-# 💻 Tech Stack
-
-| Category | Technologies |
-|-----------|--------------|
-| Frontend | React 19, Vite, JavaScript, CSS |
-| Backend | Python, FastAPI, Uvicorn |
-| AI Model | Groq API (Llama 3.3 70B) |
-| Export | jsPDF, PptxGenJS |
-| Communication | REST API, Server-Sent Events |
-| Runtime | Node.js, Python |
+| Layer | Technology |
+|-------|-----------|
+| Frontend Framework | React 19 + Vite 8 |
+| Styling | Vanilla CSS (custom design system) |
+| Backend Framework | Python 3.13, FastAPI, Uvicorn |
+| AI Model | Groq API — Llama 3.3 70B Versatile |
+| Streaming | Server-Sent Events (SSE) |
+| PDF Export | jsPDF v4 |
+| PPTX Export | PptxGenJS v4 |
+| Frontend Hosting | Vercel |
+| Backend Hosting | Render |
 
 ---
 
-# 🔮 Future Roadmap
+## 📦 Python Dependencies
 
-- Multi-LLM Support
-- Live Market Data Integration
-- Financial Forecasting
-- AI Logo Generation
-- AI Landing Page Generator
-- Investor Matching
-- Team Builder Agent
-- Legal & Compliance Agent
-- Funding Recommendation Engine
-- One-Click Startup Website Generation
+Key packages (see `server/requirements.txt` for full pinned list):
 
----
-
-# 👥 Contributors
-
-Developed with ❤️ by the FounderMindAI Team.
+```
+fastapi==0.138.0
+uvicorn==0.49.0
+openai==2.43.0          # Groq uses OpenAI-compatible client
+pydantic==2.13.4
+python-dotenv==1.2.2
+sse-starlette==3.4.5
+```
 
 ---
 
-# 📜 License
+## 📋 Prerequisites
 
-This project is licensed under the MIT License.
+| Tool | Minimum Version |
+|------|----------------|
+| Python | 3.10+ |
+| Node.js | 18+ |
+| Groq API Key | Free at console.groq.com |
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.

@@ -1,4 +1,4 @@
-# 🧠 FounderMindAI — Startup Intelligence Platform
+# 🧠 FounderMindAI — Your AI Co-Founder
 
 An advanced AI-powered platform built with React + Vite + FastAPI + Groq. Transform raw startup ideas into investor-ready business plans through **6 specialized AI agents** that perform market research, business strategy, product architecture, investor evaluation, pitch deck generation, and execution planning—all streamed live in real time.
 

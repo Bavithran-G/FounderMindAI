@@ -6,7 +6,7 @@ from typing import Any
 from openai import OpenAI
 
 # Groq-hosted models (fast, free tier available)
-MODELS = ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant']
+MODELS = ['openai/gpt-oss-120b', 'openai/gpt-oss-20b', 'qwen/qwen3.8-27b']
 MAX_RETRIES = 2
 RATE_LIMIT_WAIT_S = 20
 

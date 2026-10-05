@@ -2,7 +2,6 @@
 # Exact versions pinned from a working installation (Python 3.13, Windows)
 # Install with: pip install -r requirements.txt
 
-annotated-doc==0.0.4
 annotated-types==0.7.0
 anyio==4.14.0
 certifi==2026.6.17

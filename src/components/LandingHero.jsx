@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 
 const EXAMPLES = [
-  'AI-powered fitness coach for college students',
-  'Sustainable fashion marketplace for Gen Z',
-  'Mental health app for remote workers',
-  'Blockchain-based freelancer payment platform',
-  'AR-powered interior design tool',
+  'AI tutor for students',
+  'Sustainable fashion marketplace',
+  'AI fitness coach',
 ];
 
 export const LandingHero = ({ onAnalyze, isAnalyzing }) => {
@@ -21,30 +19,28 @@ export const LandingHero = ({ onAnalyze, isAnalyzing }) => {
 
   return (
     <section className="hero">
-      {/* Badge */}
-      <div className="hero-badge">
-        <span className="hero-badge-dot" />
-        Powered by 6 Specialized AI Agents · Llama 3.3 by Groq
+
+      {/* Brand */}
+      <div className="hero-brand">
+        <div className="hero-brand-icon">✦</div>
+        <span className="hero-brand-name">FounderMindAI</span>
       </div>
 
       {/* Headline */}
-      <h1 className="hero-title">
-        <span className="hero-title-line1">Turn Your Startup Idea</span>
-        <span className="hero-title-line2">Into a Complete Blueprint</span>
-      </h1>
+      <h1 className="hero-title">Turn an idea into intelligence.</h1>
 
       <p className="hero-subtitle">
-        FounderMindAI analyzes your idea with 6 specialized AI agents — from market research
-        to investor scoring — and delivers a complete startup intelligence report in minutes.
+        Analyze your startup idea across market, product, competition,
+        technology, and investment potential.
       </p>
 
-      {/* ── Idea Input ─────────────────────────────────────── */}
-      <div className="input-container">
+      {/* Input Command Interface */}
+      <div className="input-command">
         <div className="input-wrapper">
           <textarea
             id="idea-input"
             className="idea-input"
-            placeholder="Describe your startup idea... (e.g. AI tutor for K-12 students)"
+            placeholder="Describe your startup idea..."
             value={idea}
             onChange={e => setIdea(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -57,16 +53,27 @@ export const LandingHero = ({ onAnalyze, isAnalyzing }) => {
             onClick={handleSubmit}
             disabled={!idea.trim() || isAnalyzing}
           >
-            {isAnalyzing
-              ? <><span style={{ fontSize: 16 }}>⏳</span>Analyzing...</>
-              : <><span style={{ fontSize: 16 }}>⚡</span>Analyze</>
-            }
+            {isAnalyzing ? (
+              <><span className="mini-spinner" style={{ borderTopColor: 'white' }} />Analyzing</>
+            ) : (
+              <><span className="analyze-btn-spark">✦</span>Analyze</>
+            )}
           </button>
         </div>
 
-        <p className="input-hint">Press Enter to analyze · Shift+Enter for new line</p>
+        {/* Agent Indicator */}
+        <div className="input-agents-hint">
+          <div className="agents-dots">
+            {[...Array(6)].map((_, i) => (
+              <span key={i} className="agents-dot" />
+            ))}
+          </div>
+          <span className="agents-hint-text">6 AI agents ready</span>
+        </div>
 
+        {/* Example suggestions */}
         <div className="input-examples">
+          <span className="input-examples-label">Try:</span>
           {EXAMPLES.map(ex => (
             <button
               key={ex}
@@ -77,26 +84,6 @@ export const LandingHero = ({ onAnalyze, isAnalyzing }) => {
               {ex}
             </button>
           ))}
-        </div>
-      </div>
-
-      {/* ── Stats Bar ──────────────────────────────────────── */}
-      <div className="hero-stats">
-        <div className="hero-stat">
-          <div className="hero-stat-number">6</div>
-          <div className="hero-stat-label">AI Agents</div>
-        </div>
-        <div className="hero-stat">
-          <div className="hero-stat-number">~2m</div>
-          <div className="hero-stat-label">Analysis Time</div>
-        </div>
-        <div className="hero-stat">
-          <div className="hero-stat-number">100+</div>
-          <div className="hero-stat-label">Insights Generated</div>
-        </div>
-        <div className="hero-stat">
-          <div className="hero-stat-number">∞</div>
-          <div className="hero-stat-label">Ideas Supported</div>
         </div>
       </div>
     </section>

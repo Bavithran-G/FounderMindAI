@@ -1,69 +1,172 @@
 import React from 'react';
-import { ScoreGauge } from './ScoreGauge';
+import { Expandable } from './ui/Expandable';
 
 export const MarketReport = ({ data }) => (
   <div className="fade-in">
-    {/* Top row: Score + Analysis */}
-    <div className="info-grid" style={{ gridTemplateColumns: '200px 1fr', marginBottom: 28 }}>
-      <div className="info-card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <ScoreGauge score={data.opportunityScore} label="Opportunity Score" size={140} />
+
+    {/* Big Anchors */}
+    <div className="big-anchor-row">
+      <div className="big-anchor">
+        <div className="big-anchor-value">{(data.opportunityScore / 10).toFixed(1)}</div>
+        <div className="big-anchor-label">Opportunity Score</div>
       </div>
-      <div className="info-card">
-        <div className="info-card-label">📊 Market Analysis</div>
-        <div className="info-card-value" style={{ fontSize: 15, lineHeight: 1.7 }}>{data.analysis}</div>
-        <div style={{ marginTop: 12 }}>
-          <span className="tag tag-emerald" style={{ fontSize: 13, padding: '6px 14px' }}>
-            🎯 TAM: {data.targetMarketSize}
-          </span>
-        </div>
+      <div className="big-anchor">
+        <div className="big-anchor-value">{data.targetMarketSize}</div>
+        <div className="big-anchor-label">Target Market Size</div>
+      </div>
+      <div className="big-anchor">
+        <div className="big-anchor-value">0{data.competitors.length}</div>
+        <div className="big-anchor-label">Major Competitors</div>
       </div>
     </div>
 
-    {/* Competitors */}
-    <div className="section-header">
-      <span className="section-icon">⚔️</span>
-      <span className="section-title">Competitors ({data.competitors.length})</span>
+    <div className="editorial-statement" style={{ marginBottom: 48, maxWidth: '100%' }}>
+      "{data.analysis.split('.')[0]}."
+      {data.analysis.includes('.') && (
+        <div style={{ marginTop: 12 }}>
+          <Expandable label="Explore reasoning →">{data.analysis.substring(data.analysis.indexOf('.') + 1).trim()}</Expandable>
+        </div>
+      )}
     </div>
-    <div className="info-grid" style={{ marginBottom: 28 }}>
-      {data.competitors.map((c, i) => (
-        <div key={i} className="competitor-card">
-          <div className="competitor-name">{c.name}</div>
-          <div className="competitor-desc">{c.description}</div>
-          <div className="competitor-weakness">⚠ {c.weakness}</div>
+
+    {/* Market Signals */}
+    <div className="editorial-section-header">
+      <div className="header-number">01</div>
+      <div className="header-title">Market Signals</div>
+      <div className="header-line"></div>
+    </div>
+
+    <div className="signal-timeline">
+      {data.trends.map((t, i) => {
+        const parts = t.split(':');
+        const headline = parts.length > 1 ? parts[0] : t.slice(0, 30);
+        const desc = parts.length > 1 ? parts.slice(1).join(':') : t;
+        
+        // Pseudo-random signal strength based on index
+        const strength = i === 0 ? '●●●' : i === 1 ? '●●○' : '●○○';
+
+        return (
+          <div key={i} className="signal-timeline-item">
+            <div className="signal-node"></div>
+            <div className="signal-num">0{i + 1}</div>
+            <div className="signal-headline" style={{ fontSize: 16 }}>{headline.trim()}</div>
+            <div className="signal-desc" style={{ marginTop: 4 }}>{desc.trim()}</div>
+            <div className="signal-strength">
+              <span style={{ color: 'var(--blue)' }}>{strength.replace(/○/g, '')}</span>
+              <span className="signal-strength-dim">{strength.replace(/●/g, '')}</span>
+              <span style={{ marginLeft: 8, color: 'var(--text-muted)' }}>{i === 0 ? 'STRONG SIGNAL' : i === 1 ? 'MODERATE SIGNAL' : 'EMERGING SIGNAL'}</span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    {/* Connector */}
+    <div className="connector-flow">
+      ↓
+    </div>
+
+    {/* Market Gaps / Opportunity Stack */}
+    <div className="editorial-section-header" style={{ marginTop: 0 }}>
+      <div className="header-number">02</div>
+      <div className="header-title">Market Gaps</div>
+      <div className="header-line"></div>
+    </div>
+
+    <div className="opportunity-stack">
+      {data.gaps.map((g, i) => (
+        <div key={i} className="opportunity-item">
+          <div className="opportunity-number">0{i + 1}</div>
+          <div className="opportunity-content">
+            <div className="opportunity-title">{g.split(' ').slice(0, 3).join(' ')} Intelligence</div>
+            <div className="opportunity-desc">{g}</div>
+          </div>
+          <div className="opportunity-indicator">
+            <div className="indicator-label">Opportunity</div>
+            <div className="indicator-bar">
+              <div className="indicator-fill" style={{ width: i === 0 ? '90%' : i === 1 ? '70%' : '50%' }}></div>
+            </div>
+          </div>
         </div>
       ))}
     </div>
 
-    {/* Trends & Gaps */}
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-      <div>
-        <div className="section-header">
-          <span className="section-icon">📈</span>
-          <span className="section-title">Market Trends</span>
-        </div>
-        <div className="tags-list">
-          {data.trends.map((t, i) => (
-            <span key={i} className="tag tag-cyan" style={{ fontSize: 13, padding: '8px 14px' }}>
-              {t}
-            </span>
-          ))}
-        </div>
+    {/* Competitor Matrix */}
+    <div className="editorial-section-header">
+      <div className="header-number">03</div>
+      <div className="header-title">Competitive Landscape</div>
+      <div className="header-line"></div>
+    </div>
+
+    <table className="comparison-matrix" style={{ marginBottom: 0 }}>
+      <thead>
+        <tr>
+          <th>Competitor</th>
+          <th>AI Depth</th>
+          <th>Personalization</th>
+          <th>Threat Level</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.competitors.map((c, i) => (
+          <tr key={i}>
+            <td style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{c.name}</td>
+            <td>{i % 2 === 0 ? '●●○' : '●○○'}</td>
+            <td>{i === 1 ? '●●●' : '●●○'}</td>
+            <td><span className="matrix-partial">High</span></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    {/* AI Verdict Strip for Your Startup */}
+    <div className="verdict-strip">
+      <div className="verdict-strip-title">
+        ★ YOUR STARTUP
       </div>
-      <div>
-        <div className="section-header">
-          <span className="section-icon">🎯</span>
-          <span className="section-title">Market Gaps</span>
+      <div className="verdict-strip-insight">
+        Strong differentiation targeting the {data.targetMarketSize} TAM through AI personalization and automated workflows.
+      </div>
+      <div className="verdict-strip-metrics">
+        <div>
+          <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600, letterSpacing: 1 }}>MARKET FIT</span>
+          <span style={{ marginLeft: 12, fontSize: 18, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, color: 'var(--blue)' }}>8.8</span>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {data.gaps.map((g, i) => (
-            <div key={i} className="flow-step">
-              <div className="flow-step-num">{i + 1}</div>
-              <div className="flow-step-text">{g}</div>
-            </div>
-          ))}
+        <div>
+          <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600, letterSpacing: 1 }}>DEFENSIBILITY</span>
+          <span style={{ marginLeft: 12, fontSize: 18, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, color: 'var(--blue)' }}>8.2</span>
         </div>
       </div>
     </div>
+
+    {/* Competitive Weaknesses */}
+    <div className="editorial-section-header">
+      <div className="header-number">04</div>
+      <div className="header-title">Competitive Pressure & Weaknesses</div>
+      <div className="header-line"></div>
+    </div>
+
+    <div className="threat-list">
+      {data.competitors.map((c, i) => (
+        <div key={i} className="threat-row">
+          <div className="threat-num">0{i + 1}</div>
+          <div className="threat-desc">
+            <span style={{ fontWeight: 600, display: 'block' }}>{c.name}</span>
+            <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{c.weakness}</span>
+          </div>
+          <div className="threat-visual">
+            <div className="threat-bar-container">
+              <div className={`threat-bar-segment active ${i === 0 ? 'high' : i === 1 ? 'medium' : 'low'}`}></div>
+              <div className={`threat-bar-segment active ${i === 0 ? 'high' : i === 1 ? 'medium' : 'low'}`}></div>
+              <div className={`threat-bar-segment active ${i === 0 ? 'high' : i === 1 ? 'medium' : 'low'}`}></div>
+              <div className={`threat-bar-segment ${i === 0 ? 'active high' : ''}`}></div>
+              <div className={`threat-bar-segment ${i === 0 ? 'active high' : ''}`}></div>
+            </div>
+            <div className="threat-level-text">{i === 0 ? 'High' : i === 1 ? 'Medium' : 'Low'}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+
   </div>
 );
-

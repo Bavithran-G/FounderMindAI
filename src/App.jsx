@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import './index.css';
-import { StarField }       from './components/StarField';
+import KineticGrid         from './components/ui/KineticGrid';
 import { LandingHero }     from './components/LandingHero';
 import { AgentPipeline }   from './components/AgentPipeline';
 import { HistorySidebar }  from './components/HistorySidebar';
@@ -50,6 +50,11 @@ function App() {
   const [agentStatuses, setAgentStatuses] = useState(DEFAULT_STATUSES);
   const [historyRefresh, setHistoryRefresh] = useState(0);
   const [error, setError]                 = useState(null);
+  const [theme, setTheme]                 = useState('dark');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
   useEffect(() => {
     const handler = () => setHistoryRefresh(k => k + 1);
@@ -78,28 +83,26 @@ function App() {
         body: JSON.stringify({ idea })
       });
 
-
       if (!response.ok) {
         throw new Error(`Server error: ${response.status}`);
       }
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder('utf-8');
-      
       let finalResult = initial;
 
       while (true) {
         const { value, done } = await reader.read();
         if (done) break;
-        
+
         const chunk = decoder.decode(value, { stream: true });
         const lines = chunk.split('\n');
-        
+
         for (const line of lines) {
           if (line.startsWith('data: ')) {
             const dataStr = line.slice(6).trim();
             if (!dataStr) continue;
-            
+
             try {
               const data = JSON.parse(dataStr);
               if (data.error) {
@@ -123,14 +126,14 @@ function App() {
               }
             } catch (err) {
               if (err.message.includes('NO_API_KEY') || err.message.includes('AUTH_ERROR') || err.message.includes('PARSE_ERROR')) {
-                  throw err; // Re-throw AI errors caught during parsing
+                throw err;
               }
               console.warn('Failed to parse SSE data chunk:', err);
             }
           }
         }
       }
-      
+
       saveAnalysis(finalResult);
       setHistoryRefresh(k => k + 1);
 
@@ -166,50 +169,34 @@ function App() {
   }, []);
 
   return (
-    <div className="app">
-      <StarField />
+    <KineticGrid globalColor={theme} isActive={view === 'landing'}>
+      <div className="app">
 
       <HistorySidebar
         currentId={currentResult?.id}
         onSelect={handleSelectHistory}
         onNewAnalysis={handleNewAnalysis}
         refreshKey={historyRefresh}
+        theme={theme}
+        onToggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
       />
 
       <main className="main-content with-sidebar">
 
+        {/* Error Toast */}
         {error && (
-          <div style={{
-            position: 'fixed', top: 20, right: 20, zIndex: 9999,
-            background: 'rgba(10,8,30,0.96)',
-            border: '1px solid rgba(244,63,94,0.45)',
-            borderRadius: 16, padding: '20px 24px',
-            color: '#f1f5f9', maxWidth: 440,
-            backdropFilter: 'blur(24px)',
-            boxShadow: '0 8px 40px rgba(244,63,94,0.15)',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-              <span style={{ fontSize: 20 }}>
+          <div className="error-toast">
+            <div className="error-toast-header">
+              <span style={{ fontSize: 18 }}>
                 {error.kind === 'rate_limit' ? '⏳' : '⚠️'}
               </span>
-              <span style={{ fontWeight: 700, fontSize: 15, color: '#f43f5e' }}>
+              <span className="error-toast-title">
                 {error.kind === 'rate_limit' ? 'AI is Busy' :
                  error.kind === 'parse'      ? 'Try Again' : 'Something went wrong'}
               </span>
             </div>
-            <p style={{ fontSize: 13, lineHeight: 1.6, color: '#94a3b8', marginBottom: 16 }}>
-              {error.message}
-            </p>
-            <button
-              onClick={() => setError(null)}
-              style={{
-                padding: '6px 16px',
-                background: 'rgba(244,63,94,0.12)',
-                border: '1px solid rgba(244,63,94,0.3)',
-                borderRadius: 8, color: '#f43f5e',
-                cursor: 'pointer', fontSize: 13,
-              }}
-            >
+            <p className="error-toast-msg">{error.message}</p>
+            <button className="error-dismiss-btn" onClick={() => setError(null)}>
               Dismiss
             </button>
           </div>
@@ -229,6 +216,7 @@ function App() {
         )}
       </main>
     </div>
+    </KineticGrid>
   );
 }
 

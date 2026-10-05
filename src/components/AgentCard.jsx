@@ -3,141 +3,98 @@ import React from 'react';
 export const AGENT_CONFIGS = [
   {
     key: 'marketResearch',
-    number: 'Agent 01',
-    name: 'Market Research',
-    description: 'Finds competitors, analyzes market trends, identifies gaps, and scores the opportunity.',
-    icon: '🔍',
-    accentColor: '#0ea5e9',
-    bgColor: 'rgba(14, 165, 233, 0.06)',
-    borderColor: 'rgba(14, 165, 233, 0.15)',
+    name: 'Market',
+    fullName: 'Market Research',
+    desc: 'Competitors, trends, opportunity score',
+    icon: '◈',
+    accent: '#2563eb',
+    bg: 'rgba(37,99,235,0.07)',
+    border: 'rgba(37,99,235,0.15)',
   },
   {
     key: 'businessStrategy',
-    number: 'Agent 02',
-    name: 'Business Strategist',
-    description: 'Crafts revenue model, pricing tiers, customer segments, and value proposition.',
-    icon: '💼',
-    accentColor: '#6366f1',
-    bgColor: 'rgba(99, 102, 241, 0.06)',
-    borderColor: 'rgba(99, 102, 241, 0.15)',
+    name: 'Strategy',
+    fullName: 'Business Strategist',
+    desc: 'Revenue model, pricing, value prop',
+    icon: '◆',
+    accent: '#4f46e5',
+    bg: 'rgba(79,70,229,0.07)',
+    border: 'rgba(79,70,229,0.15)',
   },
   {
     key: 'productArchitect',
-    number: 'Agent 03',
-    name: 'Product Architect',
-    description: 'Designs MVP features, user flow, development roadmap, and recommended tech stack.',
-    icon: '🏗️',
-    accentColor: '#10b981',
-    bgColor: 'rgba(16, 185, 129, 0.06)',
-    borderColor: 'rgba(16, 185, 129, 0.15)',
+    name: 'Product',
+    fullName: 'Product Architect',
+    desc: 'MVP features, roadmap, tech stack',
+    icon: '⬡',
+    accent: '#059669',
+    bg: 'rgba(5,150,105,0.07)',
+    border: 'rgba(5,150,105,0.15)',
   },
   {
     key: 'investor',
-    number: 'Agent 04',
-    name: 'VC Investor',
-    description: 'Acts as a Sequoia-level VC: evaluates market size, defensibility, risks, and gives a funding score.',
-    icon: '💰',
-    accentColor: '#f59e0b',
-    bgColor: 'rgba(245, 158, 11, 0.06)',
-    borderColor: 'rgba(245, 158, 11, 0.15)',
+    name: 'Investor',
+    fullName: 'VC Investor',
+    desc: 'Funding score, defensibility, risks',
+    icon: '◉',
+    accent: '#d97706',
+    bg: 'rgba(217,119,6,0.07)',
+    border: 'rgba(217,119,6,0.15)',
   },
   {
     key: 'pitchDeck',
-    number: 'Agent 05',
-    name: 'Pitch Deck',
-    description: 'Auto-generates a complete 8-slide investor pitch deck with narrative and key points.',
-    icon: '🎯',
-    accentColor: '#f43f5e',
-    bgColor: 'rgba(244, 63, 94, 0.06)',
-    borderColor: 'rgba(244, 63, 94, 0.15)',
+    name: 'Pitch',
+    fullName: 'Pitch Deck',
+    desc: '8-slide investor pitch deck',
+    icon: '▣',
+    accent: '#7c3aed',
+    bg: 'rgba(124,58,237,0.07)',
+    border: 'rgba(124,58,237,0.15)',
   },
   {
     key: 'execution',
-    number: 'Agent 06',
-    name: 'Execution Planner',
-    description: 'Generates a concrete 30/60/90-day action plan with priorities, owners, and KPIs.',
-    icon: '🚀',
-    accentColor: '#8b5cf6',
-    bgColor: 'rgba(139, 92, 246, 0.06)',
-    borderColor: 'rgba(139, 92, 246, 0.15)',
+    name: 'Execution',
+    fullName: 'Execution Planner',
+    desc: '30/60/90-day action plan & KPIs',
+    icon: '◎',
+    accent: '#0891b2',
+    bg: 'rgba(8,145,178,0.07)',
+    border: 'rgba(8,145,178,0.15)',
   },
 ];
 
+const STATUS_CONFIG = {
+  idle:     { label: 'Pending',   className: 'idle' },
+  running:  { label: 'Running',   className: 'running' },
+  complete: { label: 'Done',      className: 'complete' },
+  error:    { label: 'Error',     className: 'error' },
+};
 
-export const AgentCard = ({ config, status, preview }) => {
-  const statusLabel = {
-    idle: 'Pending',
-    running: 'Analyzing',
-    complete: 'Complete',
-    error: 'Error',
-  }[status];
+export const AgentCard = ({ config, status }) => {
+  const sc = STATUS_CONFIG[status] || STATUS_CONFIG.idle;
 
   return (
     <div
       className={`agent-card ${status}`}
-      style={{
-        '--agent-color': `linear-gradient(90deg, ${config.accentColor}, ${config.accentColor}66)`,
-      }}
+      style={{ '--agent-accent': `linear-gradient(90deg, ${config.accent}, ${config.accent}88)` }}
     >
-      <div className="agent-card-top">
+      <div className="agent-card-header">
         <div
-          className="agent-icon-wrap"
-          style={{ background: config.bgColor, borderColor: config.borderColor }}
+          className="agent-icon"
+          style={{ background: config.bg, border: `1px solid ${config.border}`, color: config.accent }}
         >
           {config.icon}
         </div>
-        <div className={`agent-status-badge status-${status}`}>
-          <span className="status-dot" />
-          {statusLabel}
+        <div className={`agent-status ${sc.className}`}>
+          <span className="status-dot-sm" />
+          {sc.label}
+          {status === 'running' && (
+            <span className="mini-spinner" style={{ width: 10, height: 10, borderWidth: 1.5, borderTopColor: config.accent, marginLeft: 4 }} />
+          )}
         </div>
       </div>
-
-      <div className="agent-number">{config.number}</div>
       <div className="agent-name">{config.name}</div>
-      <div className="agent-description">{config.description}</div>
-
-      {status === 'running' && (
-        <div style={{ textAlign: 'center' }}>
-          <div className="spinner" />
-          <div className="thinking-dots">
-            <span className="thinking-dot" />
-            <span className="thinking-dot" />
-            <span className="thinking-dot" />
-          </div>
-        </div>
-      )}
-
-      {status === 'complete' && preview && (
-        <div
-          style={{
-            fontSize: 12,
-            color: 'var(--text-secondary)',
-            marginTop: 8,
-            padding: '8px 12px',
-            background: 'rgba(16,185,129,0.04)',
-            borderRadius: 8,
-            borderLeft: `3px solid ${config.accentColor}`,
-            lineHeight: 1.5,
-          }}
-        >
-          {preview}
-        </div>
-      )}
-
-      {status === 'complete' && (
-        <div
-          style={{
-            marginTop: 12,
-            fontSize: 12,
-            color: 'var(--accent-emerald)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 4,
-          }}
-        >
-          ✓ Analysis complete
-        </div>
-      )}
+      <div className="agent-desc">{config.desc}</div>
     </div>
   );
 };

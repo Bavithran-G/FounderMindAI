@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { downloadPitchDeckPPT } from '../utils/downloadPPT';
 
 const SLIDE_GRADIENTS = [
-  'linear-gradient(135deg, rgba(14,165,233,0.04) 0%, rgba(99,102,241,0.02) 100%)',
-  'linear-gradient(135deg, rgba(99,102,241,0.04) 0%, rgba(16,185,129,0.02) 100%)',
-  'linear-gradient(135deg, rgba(16,185,129,0.04) 0%, rgba(245,158,11,0.02) 100%)',
-  'linear-gradient(135deg, rgba(245,158,11,0.04) 0%, rgba(244,63,94,0.02) 100%)',
-  'linear-gradient(135deg, rgba(244,63,94,0.04) 0%, rgba(14,165,233,0.02) 100%)',
-  'linear-gradient(135deg, rgba(14,165,233,0.04) 0%, rgba(139,92,246,0.02) 100%)',
-  'linear-gradient(135deg, rgba(99,102,241,0.04) 0%, rgba(16,185,129,0.02) 100%)',
-  'linear-gradient(135deg, rgba(16,185,129,0.04) 0%, rgba(14,165,233,0.02) 100%)',
+  'linear-gradient(135deg, rgba(37,99,235,0.03) 0%, rgba(79,70,229,0.02) 100%)',
+  'linear-gradient(135deg, rgba(79,70,229,0.03) 0%, rgba(5,150,105,0.02) 100%)',
+  'linear-gradient(135deg, rgba(5,150,105,0.03) 0%, rgba(217,119,6,0.02) 100%)',
+  'linear-gradient(135deg, rgba(217,119,6,0.03) 0%, rgba(124,58,237,0.02) 100%)',
+  'linear-gradient(135deg, rgba(124,58,237,0.03) 0%, rgba(37,99,235,0.02) 100%)',
+  'linear-gradient(135deg, rgba(37,99,235,0.03) 0%, rgba(8,145,178,0.02) 100%)',
+  'linear-gradient(135deg, rgba(79,70,229,0.03) 0%, rgba(5,150,105,0.02) 100%)',
+  'linear-gradient(135deg, rgba(5,150,105,0.03) 0%, rgba(37,99,235,0.02) 100%)',
 ];
 
 export const PitchDeckView = ({ data }) => {
@@ -17,9 +17,7 @@ export const PitchDeckView = ({ data }) => {
   const [pptLoading, setPptLoading] = useState(false);
   const total = data.slides.length;
 
-  const goTo = (idx) => {
-    if (idx >= 0 && idx < total) setCurrentSlide(idx);
-  };
+  const goTo = (idx) => { if (idx >= 0 && idx < total) setCurrentSlide(idx); };
 
   const handleDownloadPPT = async () => {
     setPptLoading(true);
@@ -37,54 +35,26 @@ export const PitchDeckView = ({ data }) => {
 
   return (
     <div className="fade-in">
-      {/* Startup name & tagline */}
-      <div style={{ textAlign: 'center', marginBottom: 24 }}>
-        <div
-          style={{
-            fontFamily: 'Space Grotesk, sans-serif',
-            fontSize: 32,
-            fontWeight: 700,
-            background: 'linear-gradient(135deg, #0ea5e9, #6366f1)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            marginBottom: 6,
-          }}
-        >
-          {data.startupName}
-        </div>
-        <div style={{ color: 'var(--text-secondary)', fontSize: 16, fontStyle: 'italic', marginBottom: 16 }}>
-          "{data.tagline}"
-        </div>
 
-        {/* Download PPT button — right below the tagline, near the deck */}
+      {/* Pitch Header */}
+      <div className="pitch-header">
+        <div className="pitch-startup-name">{data.startupName}</div>
+        <div className="pitch-tagline">"{data.tagline}"</div>
         <button
           id="download-ppt-btn"
+          className="action-btn"
           onClick={handleDownloadPPT}
           disabled={pptLoading}
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-            padding: '10px 22px',
-            background: pptLoading ? 'rgba(244,63,94,0.06)' : 'rgba(244,63,94,0.1)',
-            border: '1px solid rgba(244,63,94,0.35)',
-            borderRadius: 12,
-            color: '#fb7185',
-            cursor: pptLoading ? 'not-allowed' : 'pointer',
-            fontSize: 13, fontWeight: 600,
-            transition: 'all 0.2s',
-            letterSpacing: 0.3,
-          }}
-          onMouseEnter={e => { if (!pptLoading) e.currentTarget.style.background = 'rgba(244,63,94,0.2)'; }}
-          onMouseLeave={e => { e.currentTarget.style.background = pptLoading ? 'rgba(244,63,94,0.06)' : 'rgba(244,63,94,0.1)'; }}
+          style={{ display: 'inline-flex', margin: '0 auto' }}
         >
           {pptLoading
-            ? <><span style={{ fontSize: 16 }}>⏳</span> Generating PPTX...</>
-            : <><span style={{ fontSize: 16 }}>🎯</span> Download Pitch Deck (.pptx)</>
+            ? <><span className="mini-spinner" />Generating PPTX...</>
+            : <>↓ Download Pitch Deck (.pptx)</>
           }
         </button>
       </div>
 
-      <div className="pitch-deck-container">
+      <div className="pitch-deck-wrapper">
         {/* Navigation */}
         <div className="pitch-deck-nav">
           <button
